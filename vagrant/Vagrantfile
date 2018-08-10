@@ -61,7 +61,9 @@ fi
 
 echo Installing system packages
 sudo dnf update -y
-sudo dnf install -y python make gcc git numactl-devel libpcap-devel elfutils-libelf-devel NetworkManager net-tools redhat-lsb-core pciutils kernel-modules kernel-devel wget vim protobuf-compiler
+sudo dnf install -y python make gcc git numactl-devel libpcap-devel elfutils-libelf-devel NetworkManager net-tools redhat-lsb-core pciutils kernel-modules kernel-devel wget vim protobuf-compiler lua-devel
+# Workaroung for pktgen 3.5.3 build which searches for lua5.3 which is absent on Fedora
+sudo ln -s lua.pc /usr/lib64/pkgconfig/lua5.3.pc
 sudo systemctl enable NetworkManager
 sudo systemctl start NetworkManager
 SHELL
@@ -69,7 +71,7 @@ SHELL
 $provision_ubuntu = <<SHELL
 echo Installing system packages
 sudo apt-get update
-sudo apt-get install -y python make gcc git libnuma-dev libpcap0.8-dev libelf-dev network-manager protobuf-compiler
+sudo apt-get install -y python make gcc git libnuma-dev libpcap0.8-dev libelf-dev network-manager protobuf-compiler liblua5.3-dev
 sudo systemctl enable network-manager
 sudo systemctl start network-manager
 SHELL
@@ -80,7 +82,7 @@ echo Reassigning "${syscon}" interface to system name
 sudo nmcli c mod "${syscon}" connection.id 'System connection'
 
 echo Unpacking Go language into /opt
-(cd /opt; sudo sh -c 'curl -L -s https://dl.google.com/go/go1.10.1.linux-amd64.tar.gz | tar zx')
+(cd /opt; sudo sh -c 'curl -L -s https://dl.google.com/go/go1.11.linux-amd64.tar.gz | tar zx')
 mkdir go
 chmod +x ~/scripts.sh
 . ~/scripts.sh
