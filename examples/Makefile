@@ -7,7 +7,7 @@ IMAGENAME = nff-go-examples
 EXECUTABLES = dump clonablePcapDumper kni copy errorHandling timer \
 			  createPacket sendFixedPktsNumber gtpu pingReplay \
 			  netlink
-SUBDIRS = nat tutorial antiddos demo fileReadWrite firewall forwarding
+SUBDIRS = nat tutorial antiddos demo fileReadWrite firewall forwarding ipsec
 
 gopacket:
 	go get -v github.com/google/gopacket
